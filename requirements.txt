@@ -1,0 +1,6 @@
+# Discord API Wrapper
+discord.py == 1.5.1
+# Database ORM
+peewee == 3.14.0
+# Language detection
+langdetect == 1.0.8
