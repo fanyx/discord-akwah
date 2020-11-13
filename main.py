@@ -14,10 +14,10 @@ bot = Bot(command_prefix="~ak ")
 token = config['AUTH']['token']
 
 # load extensions
-for file in os.listdir("src/cogs"):
+for file in os.listdir("src/ext"):
     if file.endswith(".py"):
         name = file[:-3]
-        bot.load_extension(f"src.cogs.{name}")
+        bot.load_extension(f"src.ext.{name}")
 
 if __name__ == "__main__":
     bot.run(token)
