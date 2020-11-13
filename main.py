@@ -1,21 +1,23 @@
-from configparser import ConfigParser
 import logging
-from discord import Client
 import sys
+from os import listdir
 
-# read config at default location
-# ./config.ini
-config = ConfigParser()
-try:
-    config.read_file(open("config.ini"))
-except FileNotFoundError:
-    logging.critical("Unable to locate the configuration file.")
-    sys.exit(1)
+from discord.ext.commands import Bot
+from src.utils.config import build_config
 
-# spawn discord client instance
+# read config at configured location \\ default to 'config.ini'
+config = build_config()
+
+# spawn discord bot instance
 # init token from config
-bot = Client()
+bot = Bot(command_prefix="~ak ")
 token = config['AUTH']['token']
 
+# load extensions
+for file in os.listdir("src/cogs"):
+    if file.endswith(".py"):
+        name = file[:-3]
+        bot.load_extension(f"src.cogs.{name}")
+
 if __name__ == "__main__":
-    bot.run()
+    bot.run(token)
