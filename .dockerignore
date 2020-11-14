@@ -1,0 +1,9 @@
+# common ignores
+Dockerfile
+.drone.yml
+.git*
+
+# repo
+README.md
+Features.md
+venv
