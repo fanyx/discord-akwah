@@ -1,23 +1,13 @@
-import os
-import logging
+from os import getenv
 
 from configparser import ConfigParser
 
-
 def build_config():
-    config_path = os.getenv("AKWAH_CONFIG_PATH")
+    config_path = getenv("AKWAH_CONFIG_PATH")
     if config_path == None:
         config_path = "config.ini"
-    
-    try:
-        config_file = open(config_path)
-    except FileNotFoundError:
-        logging.critical("Unable to locate the configuration file.")
-        sys.exit(1)
 
     config = ConfigParser()
-    config.read_file(config_file)
-    logging.info("Finished building configuration.")
-
+    config.read_file(open(config_path))
     return config
 
