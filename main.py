@@ -11,13 +11,22 @@ config = build_config()
 # spawn discord bot instance
 # init token from config
 bot = Bot(command_prefix="~ak ")
-token = config['AUTH']['token']
+TOKEN = config['AUTH']['token']
 
 # load extensions
 for file in os.listdir("src/ext"):
     if file.endswith(".py"):
         name = file[:-3]
-        bot.load_extension(f"src.ext.{name}")
+        try:
+            bot.load_extension(f"src.ext.{name}")
+        except NoEntryPointError:
+            logging.error(f"Extension {name} cannot be loaded. [No setup function]")
+        except ExtensionFailed:
+            logging.error(f"Extension {name} failed to load. [Execution error]")
+
+        logging.info("Finished loading extensions.")
 
 if __name__ == "__main__":
-    bot.run(token)
+    logging.info("Starting bot...")
+    # use token from config
+    bot.run(TOKEN)
